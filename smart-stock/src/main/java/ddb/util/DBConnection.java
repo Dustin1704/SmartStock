@@ -7,9 +7,6 @@ import java.sql.SQLException;
 public class DBConnection {
 
     //---------- PROPERTIES ----------//
-    private static final String URL = "jdbc:mysql://localhost:3306/smartstock";
-    private static final String USER = "root";
-    private static final String PASSWORD = "passWord";
     private static Connection connection = null;
 
     //---------- CONSTRUCTOR ----------//
@@ -28,7 +25,12 @@ public class DBConnection {
         // If no connection is set, Try to open a new connection
         if (connection == null) {
             try {
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                // Get connection using config properties
+                connection = DriverManager.getConnection(
+                    Config.getDbUrl(), 
+                    Config.getDbUser(), 
+                    Config.getDbPassword()
+                );
                 System.out.println("Database connected!");
             } catch (SQLException e) {
                 e.printStackTrace();
