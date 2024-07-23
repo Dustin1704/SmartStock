@@ -29,6 +29,4 @@ public class ShoppingList {
     public List<Item> getItems(){ return this.items; }
     public void setItems(List<Item> items){ this.items = items; }
 
-
-
 }

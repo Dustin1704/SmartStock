@@ -17,10 +17,10 @@ public class App extends Application
         StackPane root = new StackPane();
         Scene scene = new Scene(root, primaryScreenBounds.getWidth()/2, primaryScreenBounds.getHeight()/2);
 
-        Label label = new Label("Hello, JavaFX!");
+        Label label = new Label("-- SmartStock App --");
         root.getChildren().add(label);
 
-        primaryStage.setTitle("JavaFX Example");
+        primaryStage.setTitle("SmartStock");
         primaryStage.setMaximized(true);
         primaryStage.setScene(scene);
         primaryStage.show();

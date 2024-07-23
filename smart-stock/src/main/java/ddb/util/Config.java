@@ -17,7 +17,7 @@ public class Config {
     static {
         try (InputStream input = Config.class.getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");
+                System.err.println("Unable to find config.properties");
             }
             configProperties.load(input);
         } catch (IOException ex) {
