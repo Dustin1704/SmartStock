@@ -5,6 +5,7 @@ public class Ingredient {
 
     //----------- PROPERTIES ----------//
     private int id;
+    private int recipeId;
     private int itemId;
     private int quantity;
     private String unit;
@@ -22,9 +23,10 @@ public class Ingredient {
      * @param quantity - Quantity Of Item
      * @param unit - Units of Quantity
      */
-    public Ingredient(int id, int itemId, int quantity, String unit){
+    public Ingredient(int id, int recipeId, int itemId, int quantity, String unit){
         this.id = id;
-        this. itemId = itemId;
+        this.recipeId = recipeId;
+        this.itemId = itemId;
         this.quantity = quantity;
         this.unit = unit;
     }
@@ -32,6 +34,9 @@ public class Ingredient {
     //---------- GETTERSS/SETTERS ----------//
     public int getId(){ return this.id; }
     public void setId(int id){ this.id = id; }
+
+    public int getRecipeId(){ return this.recipeId; }
+    public void setRecipeId(int recipeId){ this.recipeId = recipeId; }
 
     public int getItemId(){ return this.itemId; }
     public void setItemId(int itemId){ this.itemId = itemId; }
