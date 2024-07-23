@@ -2,7 +2,7 @@ package ddb.models;
 
 import java.util.List;
 
-public class Recipie {
+public class Recipe {
 //---------- PROPERTIES ----------//
     private int id;
     private String name;
@@ -13,7 +13,7 @@ public class Recipie {
     /**
      * Empty Recipe Constructor
      */
-    public Recipie(){}
+    public Recipe(){}
 
     /**
      * Recipe Constructor
@@ -23,7 +23,7 @@ public class Recipie {
      * @param ingredients - List of Ingredients
      * @param servings - Number of Servings 
      */
-    public Recipie(int id, String name, List<Ingredient> ingredients, int servings){
+    public Recipe(int id, String name, List<Ingredient> ingredients, int servings){
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;
