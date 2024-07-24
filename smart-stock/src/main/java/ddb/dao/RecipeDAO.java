@@ -65,6 +65,29 @@ public class RecipeDAO {
 
     //---------- READ OPERATIONS ----------//
     /**
+     * Get all recipes
+     * @return List of all recipes
+     * @throws SQLException
+     */
+    public List<Recipe> getAllRecipes() throws SQLException{
+        String query = "SELECT * FROM recipes";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        // Create an arraylist of each recipe
+        List<Recipe> recipes = new ArrayList<>();
+        if(resultSet.next()){
+            Recipe recipe = new Recipe();
+            recipe.setId(resultSet.getInt("id"));
+            recipe.setName(resultSet.getString("name"));
+            recipe.setServings(resultSet.getInt("servings"));
+            recipe.setIngredients(getIngredientsByRecipeId(recipe.getId()));
+            recipes.add(recipe);
+        }
+        return recipes;
+    }
+
+    /**
      * Get a Recipe from its ID
      * @param recipeId - Id of the recipe
      * @return The Recipe
@@ -139,8 +162,50 @@ public class RecipeDAO {
 
     //---------- UPDATE OPERATIONS ----------//
 
+    /**
+     * Update a recipe with its current properties
+     * @param recipe - the recipe to update
+     * @throws SQLException
+     */
+    public void updateRecipe(Recipe recipe) throws SQLException{
+        String query = "UPDATE recipes SET name=?, servings=? WHERE id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, recipe.getName());
+        preparedStatement.setInt(2, recipe.getServings());
+        preparedStatement.setInt(3, recipe.getId());
+        preparedStatement.executeUpdate();
+
+        // Delete all ingredients belonging to the Recipe
+        deleteIngredientsFromRecipeId(recipe.getId());
+        // Re-add all the ingredients
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            addIngredientToRecipe(recipe.getId(), ingredient);
+        }
+    }
 
     //---------- DELETE OPERATIONS ----------//
+    /**
+     * Delete a recipe from it's Id
+     * @param recipeId - The recipe Id
+     * @throws SQLException
+     */
+    public void deleteRecipeFromId(int recipeId) throws SQLException{
+        String query = "DELETE FROM recipes WHERE id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, recipeId);
+        preparedStatement.executeUpdate();
+    }
 
+    /**
+     * Delete all ingredients from a recipeId
+     * @param recipeId - The Recipe id which ingredients belong to
+     * @throws SQLException
+     */
+    public void deleteIngredientsFromRecipeId(int recipeId) throws SQLException{
+        String query = "DELETE FROM ingredients WHERE recipe_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, recipeId);
+        preparedStatement.executeUpdate();
+    }
 
 }
