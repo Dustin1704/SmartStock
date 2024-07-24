@@ -104,6 +104,7 @@ public class RecipeDAO {
         if (resultSet.next()){
             Ingredient ingredient = new Ingredient();
             ingredient.setId(resultSet.getInt("id"));
+            ingredient.setRecipeId(resultSet.getInt("recipe_id"));
             ingredient.setItemId(resultSet.getInt("item_id"));
             ingredient.setQuantity(resultSet.getInt("quanitity"));
             ingredient.setUnit(resultSet.getString("unit"));
@@ -112,6 +113,29 @@ public class RecipeDAO {
         return ingredients;
     }
 
+    /**
+     * Get an ingredient from its Id
+     * @param ingredientId - Id of the ingredient
+     * @return The ingredient
+     * @throws SQLEXception
+     */
+    public Ingredient getIngredientById(int ingredientId) throws SQLException{
+        String query = "SELECT * FROM ingredients WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, ingredientId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()){
+            Ingredient ingredient = new Ingredient();
+            ingredient.setId(resultSet.getInt("id"));
+            ingredient.setRecipeId(resultSet.getInt("recipe_id"));
+            ingredient.setItemId(resultSet.getInt("item_id"));
+            ingredient.setQuantity(resultSet.getInt("quanitity"));
+            ingredient.setUnit(resultSet.getString("unit"));
+            return ingredient;
+        }
+        return null;
+    }
 
     //---------- UPDATE OPERATIONS ----------//
 
